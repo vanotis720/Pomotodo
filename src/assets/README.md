@@ -1,0 +1,1 @@
+Ce dossier stockera tous les actifs que nous utilisons dans react-native. Vous pouvez y ajouter des fichiers statiques tels que des polices et des images. En outre, vous pouvez ajouter d'autres ressources telles que des vidéos dans ce dossier en fonction des exigences de votre projet.
