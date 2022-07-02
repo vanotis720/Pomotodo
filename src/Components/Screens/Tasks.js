@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
 	Text, View, StyleSheet, TouchableOpacity,
 	TextInput, KeyboardAvoidingView, Platform, Keyboard,
@@ -10,6 +10,8 @@ import Colors from '../../utilities/Color';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Task from '../Parts/Task';
 import Context from '../../Context/context';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function Tasks({ navigation }) {
 
@@ -21,6 +23,17 @@ export default function Tasks({ navigation }) {
 		setTask('');
 		Keyboard.dismiss();
 	}
+
+	// update storage task when component unmount
+	useEffect(() => {
+		AsyncStorage.setItem('tasks', JSON.stringify(tasks));
+		return () => {
+			console.log("storage update");
+			AsyncStorage.setItem('tasks', JSON.stringify(tasks));
+		}
+	}
+		, [tasks]);
+
 
 	return (
 		<View style={styles.container}>

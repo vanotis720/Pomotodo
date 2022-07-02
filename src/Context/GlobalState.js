@@ -1,8 +1,20 @@
 import React from 'react';
 import Context from './context';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 export default class GlobalState extends React.Component {
+
     state = {
         tasks: [],
+    }
+
+    // get tasks from AsyncStorage
+    async componentDidMount() {
+        const tasks = await AsyncStorage.getItem('tasks');
+        if (tasks) {
+            this.setState({ tasks: JSON.parse(tasks) });
+        }
+        console.log("storage get");
     }
 
     addNewTask = (task) => {

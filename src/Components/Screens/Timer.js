@@ -6,6 +6,7 @@ import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
 import { formatSecondsToTime } from '../../helpers/cast';
 import Colors from '../../utilities/Color';
 import Context from '../../Context/context';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const POMOTIME = 25 * 60;
 const BREAKTIME = 5 * 60;
@@ -22,8 +23,14 @@ export default function Timer({ navigation }) {
 		if (tasks.length > 0) {
 			setCurrentTask(tasks[0]);
 		}
+		return () => {
+			console.log("storage update");
+			AsyncStorage.setItem('tasks', JSON.stringify(tasks));
+
+		}
 	}
 		, [tasks]);
+
 
 	// handle timer end
 	const handleTimerEnd = () => {
