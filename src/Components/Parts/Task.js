@@ -5,12 +5,14 @@ import Colors from '../../utilities/Color';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
-export default function Task({ navigation, task }) {
+export default function Task({ task, deleteTask }) {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>{task.title}</Text>
-            <TouchableOpacity onPress={() => { alert('deleted') }}>
-                <MaterialCommunityIcons name="delete" size={30} color={Colors.RED} />
+            <TouchableOpacity
+                onPress={() => deleteTask(task.id)}
+            >
+                <MaterialCommunityIcons name="delete" size={30} color={Colors.DARK} />
             </TouchableOpacity>
         </View>
     );
@@ -18,7 +20,8 @@ export default function Task({ navigation, task }) {
 
 const styles = StyleSheet.create({
     container: {
-        height: 58,
+        alignSelf: 'baseline',
+        width: '100%',
         flexDirection: 'row',
         backgroundColor: Colors.SECONDARY,
         borderRadius: 10,
@@ -29,7 +32,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     title: {
-        fontSize: 24,
+        fontSize: 20,
         color: Colors.DARK,
+        width: '90%',
     },
 });

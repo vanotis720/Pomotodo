@@ -1,44 +1,68 @@
 /* eslint-disable prettier/prettier */
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
+import {
+	Text, View, StyleSheet, TouchableOpacity,
+	TextInput, KeyboardAvoidingView, Platform, Keyboard,
+	Image, ScrollView
+} from 'react-native';
 import Colors from '../../utilities/Color';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Task from '../Parts/Task';
-
-var tasks = [{
-	id: '1',
-	title: 'Task 1',
-	url: 'file:///storage/emulated/0/Download/mood_mp3_26655.mp3',
-}, {
-	id: '2',
-	title: 'Task 2',
-	url: 'file:///storage/emulated/0/Download/alan_walker_alone_mp3_46103.mp3',
-}];
-
+import Context from '../../Context/context';
 
 export default function Tasks({ navigation }) {
+
+	const { tasks, addNewTask, deleteTask, removeFirstTask } = React.useContext(Context);
+	const [task, setTask] = React.useState('');
+
+	const handleAddTask = () => {
+		addNewTask(task);
+		setTask('');
+		Keyboard.dismiss();
+	}
+
 	return (
 		<View style={styles.container}>
 			<StatusBar style="light" />
 			<View style={styles.header}>
 				<Text style={styles.headerText}>Mes Tâches</Text>
-				<TouchableOpacity onPress={() => { alert('start') }}>
+				<TouchableOpacity onPress={() => {
+					if (tasks.length > 0) {
+						navigation.navigate('Timer');
+					}
+				}}>
 					<MaterialCommunityIcons name="motion-play" size={30} style={styles.icon} />
 				</TouchableOpacity>
 			</View>
 
-			<View style={styles.tasks}>
+			<ScrollView style={styles.tasks}>
 				{
-					tasks.map(task => (
-						<Task key={task.id} task={task} navigation={navigation} />
-					))
+					(tasks.length > 0) ?
+						tasks.map(task => (
+							<Task key={task.id} task={task} navigation={navigation} deleteTask={deleteTask} />
+						))
+						:
+						<View style={styles.noTasks}>
+							<Image source={require('../../assets/images/no-tasks.png')} style={styles.noTasksImage} />
+							<Text style={styles.noTasksText}>Aucune tâche n'a été ajoutée</Text>
+							<Text style={styles.noTasksTextDesc}>Vous pouvez ajouter une tâche en cliquant sur le bouton +</Text>
+						</View>
 				}
-			</View>
+			</ScrollView>
 
 			<KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.actionWrapper}>
-				<TextInput style={styles.actionInput} placeholder="Ajouter une tâche" />
-				<TouchableOpacity style={styles.actionBtn} onPress={() => { navigation.navigate('AddTask') }}>
+				<TextInput
+					style={styles.actionInput}
+					placeholder="Ajouter une tâche"
+					value={task}
+					onChangeText={(text) => setTask(text)}
+					onSubmitEditing={() => handleAddTask()}
+				/>
+				<TouchableOpacity
+					style={styles.actionBtn}
+					onPress={() => handleAddTask()}
+				>
 					<MaterialCommunityIcons name="plus" size={30} color={Colors.RED} />
 				</TouchableOpacity>
 			</KeyboardAvoidingView>
@@ -48,14 +72,16 @@ export default function Tasks({ navigation }) {
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
+		height: '100%',
+		width: '100%',
 		backgroundColor: Colors.DARK,
-		paddingHorizontal: 20,
-		paddingVertical: 10,
+		justifyContent: 'center',
+		alignItems: 'center',
 	},
 	header: {
 		height: '10%',
-		marginTop: 30,
+		width: '90%',
+		marginTop: 40,
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		borderBottomColor: Colors.SECONDARY,
@@ -74,16 +100,21 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 	},
 	tasks: {
-		flex: 5,
-		marginTop: 20,
+		height: '70%',
+		width: '90%',
+		marginVertical: 5,
+
 	},
 	actionWrapper: {
 		position: 'absolute',
-		bottom: 0,
-		left: 20,
 		height: '10%',
+		width: '90%',
+		bottom: 0,
 		flexDirection: 'row',
+		alignItems: 'center',
 		justifyContent: 'space-between',
+		paddingTop: 10,
+		backgroundColor: Colors.DARK,
 	},
 	actionBtn: {
 		height: 54,
@@ -92,20 +123,42 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		backgroundColor: Colors.WHITE,
 		borderRadius: 30,
-		borderColor: Colors.SECONDARY,
-		borderWidth: 1,
+		marginStart: 10,
 	},
 	actionInput: {
 		height: 54,
 		width: '80%',
 		backgroundColor: Colors.SECONDARY,
-		borderColor: Colors.WHITE,
-		borderWidth: 1,
 		borderRadius: 20,
 		paddingHorizontal: 10,
 		paddingVertical: 10,
-		color: Colors.SECONDARY,
+		color: Colors.DARK,
 		fontSize: 18,
 		fontWeight: 'bold',
+		marginStart: 10,
+	},
+	noTasks: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		marginTop: 20,
+	},
+	noTasksText: {
+		color: Colors.WHITE,
+		fontSize: 32,
+		fontWeight: 'bold',
+		textAlign: 'center',
+	},
+	noTasksTextDesc: {
+		color: Colors.SECONDARY,
+		fontSize: 15,
+		fontWeight: 'bold',
+		marginTop: 10,
+		textAlign: 'center',
+	},
+	noTasksImage: {
+		width: 120,
+		height: 120,
+		marginBottom: 20,
 	}
 });
