@@ -25,7 +25,8 @@
         "foregroundImage": "./src/assets/images/logo-circle.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.vanotis720.pomotodo"
+      "package": "com.vanotis720.pomotodo",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./src/assets/images/logo-circle.png"
