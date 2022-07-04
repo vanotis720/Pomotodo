@@ -1,20 +1,21 @@
 /* eslint-disable prettier/prettier */
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Alert, Button } from 'react-native';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
 import { formatSecondsToTime } from '../../helpers/cast';
 import Colors from '../../utilities/Color';
 import Context from '../../Context/context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const POMOTIME = 25 * 60;
-const BREAKTIME = 5 * 60;
+
+const POMOTIME = 1 * 60;
+const BREAKTIME = 1 * 60;
 const LONGBREAKTIME = 15 * 60;
 
 export default function Timer({ navigation }) {
 
-	const { tasks, removeFirstTask } = React.useContext(Context);
+	const { tasks, removeFirstTask, sendTaskToBottom } = React.useContext(Context);
 	const [currentTask, setCurrentTask] = React.useState('');
 	const [pomotype, setPomotype] = React.useState('WORK');
 	const [pomonumber, setPomonumber] = React.useState(1);
@@ -35,7 +36,7 @@ export default function Timer({ navigation }) {
 	// handle timer end
 	const handleTimerEnd = () => {
 		if (pomotype === 'WORK') {
-			removeFirstTask();
+			(pomotype == 'WORK') ? createTwoButtonAlert() : null;
 			setPomonumber(pomonumber + 1);
 
 			if (pomonumber === 3) {
@@ -78,6 +79,31 @@ export default function Timer({ navigation }) {
 		}
 	}
 
+	const createTwoButtonAlert = () => {
+		Alert.alert(
+			"Fin du temps: " + currentTask.title,
+			"Avez-vos realiser cette tache ?",
+			[
+				{
+					text: "Non",
+					onPress: () => {
+						console.log("Renvoyer en bas de liste");
+						sendTaskToBottom();
+					},
+					style: "cancel"
+				},
+				{
+					text: "Oui",
+					onPress: () => {
+						console.log("Retirer la tache");
+						removeFirstTask();
+					}
+				}
+			]
+		);
+	}
+
+
 	return (
 		<View style={styles.container}>
 			<StatusBar style="light" />
@@ -110,10 +136,13 @@ export default function Timer({ navigation }) {
 						</Text>
 					}
 				</CountdownCircleTimer>
+				{/* <Button title={"2-Button Alert"} onPress={createTwoButtonAlert} /> */}
+
 			</View>
 			<View style={styles.footer}>
 				<Text style={styles.taskTitleText}>{getPomotypeText()}</Text>
 			</View>
+
 		</View>
 	);
 }

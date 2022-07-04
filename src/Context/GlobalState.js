@@ -36,6 +36,13 @@ export default class GlobalState extends React.Component {
         this.setState({ tasks: this.state.tasks.slice(1) });
     }
 
+    // send first task to the bottom of the tasks list
+    sendTaskToBottom = () => {
+        console.log('sendTaskToBottom');
+        const firstTask = this.state.tasks[0];
+        this.setState({ tasks: [...this.state.tasks.slice(1), firstTask] });
+    }
+
     lastTaskId = () => {
         if (this.state.tasks.length > 0) {
             return this.state.tasks[this.state.tasks.length - 1].id;
@@ -51,6 +58,7 @@ export default class GlobalState extends React.Component {
                     addNewTask: this.addNewTask,
                     deleteTask: this.deleteTask,
                     removeFirstTask: this.removeFirstTask,
+                    sendTaskToBottom: this.sendTaskToBottom,
                 }}
             >
                 {this.props.children}
