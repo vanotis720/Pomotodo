@@ -9,8 +9,8 @@ import Context from '../../Context/context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-const POMOTIME = 1 * 60;
-const BREAKTIME = 1 * 60;
+const POMOTIME = 25 * 60;
+const BREAKTIME = 5 * 60;
 const LONGBREAKTIME = 15 * 60;
 
 export default function Timer({ navigation }) {
@@ -108,7 +108,7 @@ export default function Timer({ navigation }) {
 		<View style={styles.container}>
 			<StatusBar style="light" />
 			<View style={styles.header}>
-				<Text style={styles.headerText}>{pomonumber} / 3</Text>
+				<Text style={styles.headerText}>{pomonumber} / {tasks.length}</Text>
 			</View>
 			<View style={styles.timer}>
 				<CountdownCircleTimer
@@ -150,7 +150,7 @@ export default function Timer({ navigation }) {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: Colors.DARK,
+		backgroundColor: Colors.BACKGROUND,
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
 	},
 	headerText: {
 		flex: 1,
-		color: Colors.SECONDARY,
+		color: Colors.TEXT,
 		fontSize: 32,
 		fontWeight: 'bold',
 	},
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 	},
 	timerText: {
-		color: Colors.SECONDARY,
+		color: Colors.TEXT,
 		fontSize: 45,
 		fontWeight: 'bold',
 	},
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
 	},
 	taskTitleText: {
 		flex: 1,
-		color: Colors.SECONDARY,
+		color: Colors.TEXT,
 		fontSize: 32,
 		fontWeight: 'bold',
 	},

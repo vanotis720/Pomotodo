@@ -1,28 +1,39 @@
 /* eslint-disable prettier/prettier */
 import { StatusBar } from 'expo-status-bar';
-import React, { useEffect } from 'react';
-import {
-	Text, View, StyleSheet, TouchableOpacity,
-	TextInput, KeyboardAvoidingView, Platform, Keyboard,
-	Image, ScrollView
-} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Text, View, StyleSheet, TouchableOpacity, Image, ScrollView, Keyboard } from 'react-native';
 import Colors from '../../utilities/Color';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Task from '../Parts/Task';
 import Context from '../../Context/context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { SwipeablePanel } from 'rn-swipeable-panel';
+import InputTask from '../Parts/InputTask';
+
 
 
 export default function Tasks({ navigation }) {
 
-	const { tasks, addNewTask, deleteTask, removeFirstTask } = React.useContext(Context);
-	const [task, setTask] = React.useState('');
+	const [panelProps, setPanelProps] = useState({
+		fullWidth: true,
+		closeOnTouchOutside: true,
+		allowTouchOutside: true,
+		onClose: () => closePanel(),
+		onlySmall: true,
+		noBackgroundOpacity: true,
+		showCloseButton: true,
 
-	const handleAddTask = () => {
-		addNewTask(task);
-		setTask('');
-		Keyboard.dismiss();
-	}
+	});
+	const [isPanelActive, setIsPanelActive] = useState(false);
+	const { tasks, addNewTask, deleteTask, removeFirstTask } = React.useContext(Context);
+
+	const openPanel = () => {
+		setIsPanelActive(true);
+	};
+
+	const closePanel = () => {
+		setIsPanelActive(false);
+	};
 
 	// update storage task when component unmount
 	useEffect(() => {
@@ -49,6 +60,7 @@ export default function Tasks({ navigation }) {
 				</TouchableOpacity>
 			</View>
 
+			{/* <View style={{ height: '85%' }}> */}
 			<ScrollView style={styles.tasks}>
 				{
 					(tasks.length > 0) ?
@@ -63,23 +75,24 @@ export default function Tasks({ navigation }) {
 						</View>
 				}
 			</ScrollView>
+			{/* </View> */}
 
-			<KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.actionWrapper}>
-				<TextInput
-					style={styles.actionInput}
-					placeholder="Ajouter une tâche"
-					placeholderTextColor={Colors.TEXT}
-					value={task}
-					onChangeText={(text) => setTask(text)}
-					onSubmitEditing={() => handleAddTask()}
-				/>
+			<View style={styles.actionWrapper}>
 				<TouchableOpacity
 					style={styles.actionBtn}
-					onPress={() => handleAddTask()}
+					onPress={() => openPanel()}
 				>
-					<MaterialCommunityIcons name="plus" size={30} color={Colors.WHITE} />
+					<Text style={styles.actionBtnText}>AJOUTER UNE TACHE</Text>
 				</TouchableOpacity>
-			</KeyboardAvoidingView>
+			</View>
+
+			<SwipeablePanel
+				{...panelProps} isActive={isPanelActive}
+				style={styles.swipable}
+				closeRootStyle={{ backgroundColor: Colors.DARK }}
+			>
+				<InputTask addNewTask={addNewTask} />
+			</SwipeablePanel>
 		</View>
 	);
 }
@@ -116,44 +129,32 @@ const styles = StyleSheet.create({
 		shadowColor: Colors.GRAY,
 	},
 	tasks: {
-		height: '70%',
 		width: '90%',
-		marginVertical: 5,
+		marginTop: 5,
+		marginBottom: '25%',
 	},
 	actionWrapper: {
 		position: 'absolute',
 		height: '10%',
-		width: '90%',
-		bottom: 0,
-		flexDirection: 'row',
+		width: '100%',
+		bottom: 5,
 		alignItems: 'center',
-		justifyContent: 'space-between',
 		paddingTop: 10,
 		backgroundColor: Colors.BACKGROUND,
 	},
 	actionBtn: {
-		height: 54,
-		width: 54,
+		height: 50,
+		width: '90%',
 		alignItems: 'center',
 		justifyContent: 'center',
 		backgroundColor: Colors.GRAY,
-		borderRadius: 30,
-		marginStart: 10,
+		borderRadius: 10,
 		elevation: 10,
 		shadowColor: Colors.WHITE,
 	},
-	actionInput: {
-		height: 54,
-		width: '80%',
-		backgroundColor: Colors.GRAY,
-		color: Colors.WHITE,
-		borderRadius: 20,
-		paddingHorizontal: 10,
-		paddingVertical: 10,
-		fontSize: 18,
-		marginStart: 10,
-		elevation: 10,
-		shadowColor: Colors.WHITE,
+	actionBtnText: {
+		color: Colors.TEXT,
+		fontSize: 15,
 	},
 	noTasks: {
 		flex: 1,
@@ -179,5 +180,9 @@ const styles = StyleSheet.create({
 		width: 120,
 		height: 120,
 		marginBottom: 20,
-	}
+	},
+	swipable: {
+		backgroundColor: Colors.GRAY,
+		paddingHorizontal: 20,
+	},
 });

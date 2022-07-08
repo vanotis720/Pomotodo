@@ -8,7 +8,7 @@ const Colors = {
 
     BACKGROUND: '#292929',
     TEXT: '#ABABAB',
-    PRIMARY: '#EF233C',
+    PRIMARY: '#187AC7',
     GRAY: '#333333',
 
 };
