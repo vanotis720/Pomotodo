@@ -17,12 +17,11 @@ export default function Tasks({ navigation }) {
 	const [panelProps, setPanelProps] = useState({
 		fullWidth: true,
 		closeOnTouchOutside: true,
-		allowTouchOutside: true,
-		onClose: () => closePanel(),
 		onlySmall: true,
 		noBackgroundOpacity: true,
 		showCloseButton: true,
-
+		onClose: () => closePanel(),
+		onPressCloseButton: () => closePanel(),
 	});
 	const [isPanelActive, setIsPanelActive] = useState(false);
 	const { tasks, addNewTask, deleteTask, removeFirstTask } = React.useContext(Context);

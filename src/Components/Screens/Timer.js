@@ -9,7 +9,7 @@ import Context from '../../Context/context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-const POMOTIME = 25 * 60;
+const POMOTIME = 1 * 60;
 const BREAKTIME = 5 * 60;
 const LONGBREAKTIME = 15 * 60;
 

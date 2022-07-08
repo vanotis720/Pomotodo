@@ -13,6 +13,10 @@
     "production": {}
   },
   "submit": {
-    "production": {}
+    "production": {
+      "android": {
+        "serviceAccountKeyPath": "/home/vanotis720/Documents/code/PERSONNAL/REACTNATIVE/pc-api-8441415695321219599-160-9e4955c001e6.json"
+      }
+    }
   }
 }
