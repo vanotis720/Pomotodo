@@ -49,7 +49,14 @@ export default function Tasks({ navigation }) {
 		<View style={styles.container}>
 			<StatusBar style="light" />
 			<View style={styles.header}>
-				<Text style={styles.headerText}>Mes Tâches</Text>
+				<Text style={styles.headerText}>
+					<MaterialCommunityIcons
+						name="menu"
+						size={30}
+						onPress={() => navigation.toggleDrawer()}
+					/>
+					Mes Tâches
+				</Text>
 				<TouchableOpacity onPress={() => {
 					if (tasks.length > 0) {
 						navigation.navigate('Timer');
