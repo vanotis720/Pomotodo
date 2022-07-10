@@ -82,12 +82,12 @@ export default function Timer({ navigation }) {
 	const createTwoButtonAlert = () => {
 		Alert.alert(
 			"Fin du temps: " + currentTask.title,
-			"Avez-vos realiser cette tache ?",
+			"Avez-vous realiser cette tache ?",
 			[
 				{
 					text: "Non",
 					onPress: () => {
-						console.log("Renvoyer en bas de liste");
+						console.log("Renvoyer en bas de la liste");
 						sendTaskToBottom();
 					},
 					style: "cancel"
