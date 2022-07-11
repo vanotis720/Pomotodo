@@ -6,7 +6,6 @@ import * as Device from 'expo-device';
 
 
 const CustomDrawer = ({ navigation }) => {
-
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -20,13 +19,16 @@ const CustomDrawer = ({ navigation }) => {
             </View>
             <View style={styles.body}>
                 <View style={styles.bodyItem}>
-                    <TouchableOpacity
-                        onPress={() => navigation.navigate('About')}
-                    >
+                    <TouchableOpacity onPress={() => navigation.navigate('Tasks')}>
                         <Text style={styles.bodyItemText}>
-                            À propos
+                            Mes taches
                         </Text>
                     </TouchableOpacity>
+                </View>
+                <View style={styles.bodyItem}>
+                    <Text style={styles.bodyItemText} onPress={() => { Linking.openURL('https://vanotis720.github.io/pomotodo-landing/') }}>
+                        À propos
+                    </Text>
                 </View>
                 <View style={styles.bodyItem}>
                     <Text style={styles.bodyItemText} onPress={() => { Linking.openURL('https://www.privacypolicies.com/live/09d9e3cb-87e3-4fac-a91a-5ae263943a54') }}>
