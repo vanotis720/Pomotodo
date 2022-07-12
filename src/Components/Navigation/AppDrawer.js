@@ -1,5 +1,6 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import About from '../Screens/About';
+import AppBottom from './AppBottom';
 import AppStackNavigation from './AppStackNavigation';
 import CustomDrawer from './CustomDrawer';
 
@@ -10,7 +11,7 @@ export default function AppDrawer() {
         <Drawer.Navigator drawerContent={props => <CustomDrawer {...props} />}>
             <Drawer.Screen
                 name="App"
-                component={AppStackNavigation}
+                component={AppBottom}
                 options={{
                     headerShown: false,
                 }}
