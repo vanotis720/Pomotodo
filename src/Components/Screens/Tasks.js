@@ -66,7 +66,6 @@ export default function Tasks({ navigation }) {
 				</TouchableOpacity>
 			</View>
 
-			{/* <View style={{ height: '85%' }}> */}
 			<ScrollView style={styles.tasks}>
 				{
 					(tasks.length > 0) ?
@@ -81,7 +80,6 @@ export default function Tasks({ navigation }) {
 						</View>
 				}
 			</ScrollView>
-			{/* </View> */}
 
 			<View style={styles.actionWrapper}>
 				<TouchableOpacity

@@ -6,13 +6,22 @@ export default class GlobalState extends React.Component {
 
     state = {
         tasks: [],
+        firstTime: true,
     }
 
     // get tasks from AsyncStorage
     async componentDidMount() {
         const tasks = await AsyncStorage.getItem('tasks');
+        const firstTime = await AsyncStorage.getItem('firstTime');
+
         if (tasks) {
             this.setState({ tasks: JSON.parse(tasks) });
+        }
+        if (firstTime) {
+            this.setState({ firstTime: JSON.parse(firstTime) });
+            console.log('getting');
+            console.log(JSON.parse(firstTime));
+            console.log(this.state.firstTime);
         }
         console.log("storage get");
     }
@@ -50,15 +59,24 @@ export default class GlobalState extends React.Component {
         return 0;
     }
 
+    // set firstTime to false when user finish onboarding
+    setFirstTime = () => {
+        console.log('setFirstTime to false');
+        this.setState({ firstTime: false });
+        AsyncStorage.setItem('firstTime', JSON.stringify(false));
+    }
+
     render() {
         return (
             <Context.Provider
                 value={{
                     tasks: this.state.tasks,
+                    firstTime: this.state.firstTime,
                     addNewTask: this.addNewTask,
                     deleteTask: this.deleteTask,
                     removeFirstTask: this.removeFirstTask,
                     sendTaskToBottom: this.sendTaskToBottom,
+                    setFirstTime: this.setFirstTime,
                 }}
             >
                 {this.props.children}
