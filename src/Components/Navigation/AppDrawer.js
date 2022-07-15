@@ -16,14 +16,6 @@ export default function AppDrawer() {
                     headerShown: false,
                 }}
             />
-            <Drawer.Screen
-                name="About"
-                title="À propos"
-                component={About}
-                options={{
-                    headerShown: true,
-                }}
-            />
         </Drawer.Navigator>
     );
 }

@@ -11,7 +11,8 @@ import { SwipeablePanel } from 'rn-swipeable-panel';
 import InputTask from '../Parts/InputTask';
 
 
-export default function Tasks({ navigation }) {
+
+export default function Stats({ navigation }) {
 
 	const [panelProps, setPanelProps] = useState({
 		fullWidth: true,
@@ -49,34 +50,21 @@ export default function Tasks({ navigation }) {
 			<StatusBar style="light" />
 			<View style={styles.header}>
 				<Text style={styles.headerText}>
-					<MaterialCommunityIcons
-						name="menu"
-						size={30}
-						onPress={() => navigation.toggleDrawer()}
-					/>
-					Mes Tâches
+					Mes Projets
 				</Text>
-				<TouchableOpacity onPress={() => {
-					if (tasks.length > 0) {
-						navigation.navigate('Timer');
-					}
-				}}>
-					<MaterialCommunityIcons name="motion-play" size={30} style={styles.icon} />
-				</TouchableOpacity>
+				<MaterialCommunityIcons
+					name="menu"
+					color={Colors.WHITE}
+					size={30}
+					onPress={() => navigation.toggleDrawer()}
+				/>
 			</View>
 
 			<ScrollView style={styles.tasks}>
 				{
-					(tasks.length > 0) ?
-						tasks.map(task => (
-							<Task key={task.id} task={task} navigation={navigation} deleteTask={deleteTask} />
-						))
-						:
-						<View style={styles.noTasks}>
-							<Image source={require('../../assets/images/no-tasks.png')} style={styles.noTasksImage} />
-							<Text style={styles.noTasksText}>Aucune tâche n'a été ajoutée</Text>
-							<Text style={styles.noTasksTextDesc}>Vous pouvez ajouter une tâche en cliquant sur le bouton +</Text>
-						</View>
+					tasks.map(task => (
+						<Task key={task.id} task={task} navigation={navigation} deleteTask={deleteTask} />
+					))
 				}
 			</ScrollView>
 
@@ -85,7 +73,7 @@ export default function Tasks({ navigation }) {
 					style={styles.actionBtn}
 					onPress={() => openPanel()}
 				>
-					<Text style={styles.actionBtnText}>AJOUTER UNE TACHE</Text>
+					<Text style={styles.actionBtnText}>AJOUTER UNE PROJET</Text>
 				</TouchableOpacity>
 			</View>
 
@@ -94,7 +82,7 @@ export default function Tasks({ navigation }) {
 				style={styles.swipable}
 				closeRootStyle={{ backgroundColor: Colors.DARK }}
 			>
-				<InputTask addNewTask={addNewTask} />
+				{/* <InputTask addNewTask={addNewTask} /> */}
 			</SwipeablePanel>
 		</View>
 	);

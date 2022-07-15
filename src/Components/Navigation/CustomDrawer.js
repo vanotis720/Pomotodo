@@ -19,13 +19,6 @@ const CustomDrawer = ({ navigation }) => {
             </View>
             <View style={styles.body}>
                 <View style={styles.bodyItem}>
-                    <TouchableOpacity onPress={() => navigation.navigate('Tasks')}>
-                        <Text style={styles.bodyItemText}>
-                            Mes taches
-                        </Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.bodyItem}>
                     <Text style={styles.bodyItemText} onPress={() => { Linking.openURL('https://vanotis720.github.io/pomotodo-landing/') }}>
                         À propos
                     </Text>
