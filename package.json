@@ -31,6 +31,7 @@
     "react-native-screens": "~3.20.0",
     "react-native-svg": "13.4.0",
     "react-native-web": "~0.18.11",
+    "realm": "^11.7.0",
     "rn-swipeable-panel": "^1.2.7"
   },
   "devDependencies": {
