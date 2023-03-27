@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Alert, Button } from 'react-native';
@@ -7,6 +6,7 @@ import { formatSecondsToTime } from '../../helpers/cast';
 import Colors from '../../utilities/Color';
 import Context from '../../Context/context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AntDesign, Foundation, Feather } from '@expo/vector-icons';
 
 
 const POMOTIME = 25 * 60;
@@ -19,6 +19,7 @@ export default function Timer({ navigation }) {
 	const [currentTask, setCurrentTask] = React.useState('');
 	const [pomotype, setPomotype] = React.useState('WORK');
 	const [pomonumber, setPomonumber] = React.useState(1);
+	const [isPlaying, setIsPlaying] = React.useState(true);
 
 	useEffect(() => {
 		if (tasks.length > 0) {
@@ -51,6 +52,11 @@ export default function Timer({ navigation }) {
 		else if (pomotype !== 'WORK') {
 			setPomotype('WORK');
 		}
+	}
+
+	const handleNextTaskBtn = () => {
+		createTwoButtonAlert();
+		// TODO: add some logic
 	}
 
 	// return time based on pomotype
@@ -111,9 +117,36 @@ export default function Timer({ navigation }) {
 				<Text style={styles.headerText}>{pomonumber} / {tasks.length}</Text>
 			</View>
 			<View style={styles.timer}>
-				
+				<View style={styles.actionView}>
+					<TouchableOpacity
+						style={styles.pauseBtn}
+						onPress={() => {
+							setIsPlaying(!isPlaying)
+						}}
+					>
+						{
+							isPlaying ? <AntDesign name="pause" size={30} color={Colors.SECONDARY} /> : <Feather name="play" size={25} color={Colors.SECONDARY} />
+						}
+					</TouchableOpacity>
+					<TouchableOpacity
+						style={styles.nextBtn}
+						onPress={() => {
+							handleNextTaskBtn()
+						}}
+					>
+						<Foundation name="next" size={30} color={Colors.PRIMARY} />
+					</TouchableOpacity>
+					<TouchableOpacity
+						style={styles.stopBtn}
+						onPress={() => {
+							navigation.goBack();
+						}}
+					>
+						<AntDesign name="home" size={30} color={Colors.GRAY} />
+					</TouchableOpacity>
+				</View>
 				<CountdownCircleTimer
-					isPlaying
+					isPlaying={isPlaying}
 					duration={getTime()}
 					colors={[Colors.SECONDARY, Colors.DANGER]}
 					colorsTime={[POMOTIME, POMOTIME / 5]}
@@ -186,4 +219,37 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		fontWeight: 'bold',
 	},
+	actionView: {
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		alignItems: 'center',
+		marginBottom: 20,
+	},
+	pauseBtn: {
+		backgroundColor: Colors.PRIMARY,
+		width: 60,
+		height: 60,
+		borderRadius: 25,
+		marginEnd: 10,
+		justifyContent: 'center',
+		alignItems: 'center'
+	},
+	nextBtn: {
+		backgroundColor: Colors.SECONDARY,
+		width: 60,
+		height: 60,
+		borderRadius: 25,
+		marginEnd: 10,
+		justifyContent: 'center',
+		alignItems: 'center'
+
+	},
+	stopBtn: {
+		backgroundColor: Colors.DANGER,
+		width: 60,
+		height: 60,
+		borderRadius: 25,
+		justifyContent: 'center',
+		alignItems: 'center'
+	}
 });
