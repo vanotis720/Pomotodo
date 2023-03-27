@@ -1,0 +1,35 @@
+{
+  "expo": {
+    "name": "pomotodo",
+    "slug": "pomotodo",
+    "version": "1.0.4",
+    "orientation": "portrait",
+    "icon": "./assets/images/logo-icon.png",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#3C0759"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/logo-icon.png",
+        "backgroundColor": "#3C0759"
+      },
+      "package": "com.vanotis720.pomotodo",
+      "versionCode": 4
+    },
+    "web": {
+      "favicon": "./assets/images/logo-icon.png"
+    }
+  }
+}

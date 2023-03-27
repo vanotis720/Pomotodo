@@ -1,0 +1,22 @@
+{
+  "cli": {
+    "version": ">= 0.54.1"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "distribution": "internal"
+    },
+    "production": {}
+  },
+  "submit": {
+    "production": {
+      "android": {
+        "serviceAccountKeyPath": "/home/vanotis720/Documents/code/PERSONNAL/REACTNATIVE/pc-api-8441415695321219599-160-9e4955c001e6.json"
+      }
+    }
+  }
+}
