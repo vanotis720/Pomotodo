@@ -4,14 +4,17 @@ import { NavigationContainer } from "@react-navigation/native";
 import GlobalState from './src/Context/GlobalState';
 import AppDrawer from './src/Components/Navigation/AppDrawer';
 import AuthNavigation from './src/Components/Navigation/AuthNavigation';
+import { AuthProvider } from './src/Components/providers/AuthProvider';
 
 export default function App() {
 	return (
-		<NavigationContainer>
-			<GlobalState>
+		<AuthProvider>
+			<NavigationContainer>
+			{/* <GlobalState> */}
 				{/* <AppDrawer /> */}
 				<AuthNavigation />
-			</GlobalState>
+			{/* </GlobalState> */}
 		</NavigationContainer>
+		</AuthProvider>
 	);
 }
