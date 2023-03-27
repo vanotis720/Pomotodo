@@ -63,13 +63,13 @@ const styles = StyleSheet.create({
         paddingVertical: 20,
     },
     headerText: {
-        color: Colors.WHITE,
+        color: Colors.PRIMARY,
         fontSize: 25,
         fontWeight: 'bold',
         marginTop: 10,
     },
     versionText: {
-        color: Colors.TEXT,
+        color: Colors.PRIMARY,
         fontSize: 15,
         marginTop: 10,
     },
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
         height: 100,
         borderRadius: 90,
         borderWidth: 1,
-        borderColor: Colors.TEXT,
+        borderColor: Colors.PRIMARY,
     },
     body: {
         flex: 5,
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     footerText: {
-        color: Colors.TEXT,
+        color: Colors.PRIMARY,
         fontSize: 15,
         textAlign: 'center',
     },
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         justifyContent: 'center',
         backgroundColor: Colors.GRAY,
-        borderBottomColor: Colors.BACKGROUND,
+        borderBottomColor: Colors.WHITE,
         borderBottomWidth: 1,
     },
     bodyItemText: {
