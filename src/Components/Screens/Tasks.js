@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, Image, ScrollView, Keyboard } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Image, ScrollView, Keyboard, KeyboardAvoidingView } from 'react-native';
 import Colors from '../../utilities/Color';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Task from '../Parts/Task';
@@ -96,7 +96,10 @@ export default function Tasks({ navigation }) {
 				style={styles.swipable}
 				closeRootStyle={{ backgroundColor: Colors.DARK }}
 			>
-				<InputTask addNewTask={addNewTask} />
+				<KeyboardAvoidingView>
+					<InputTask addNewTask={addNewTask} />
+				</KeyboardAvoidingView>
+
 			</SwipeablePanel>
 		</View>
 	);
@@ -187,7 +190,7 @@ const styles = StyleSheet.create({
 		marginBottom: 20,
 	},
 	swipable: {
-		backgroundColor: Colors.GRAY,
+		backgroundColor: Colors.DARK,
 		paddingHorizontal: 20,
 	},
 });

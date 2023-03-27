@@ -18,7 +18,7 @@ export default function InputTask({ addNewTask }) {
                 maxLength={50}
                 style={styles.input}
                 placeholder="Nom de la tâche"
-                placeholderTextColor={Colors.TEXT}
+                placeholderTextColor={Colors.PRIMARY}
                 onChangeText={(text) => setTask(text)}
                 value={task}
                 onSubmitEditing={() => { handleAddTask() }}
@@ -27,7 +27,7 @@ export default function InputTask({ addNewTask }) {
                 style={styles.button}
                 onPress={() => { handleAddTask() }}
             >
-                <MaterialCommunityIcons name="send" size={30} color={Colors.TEXT} />
+                <MaterialCommunityIcons name="send" size={30} color={Colors.SECONDARY} />
             </TouchableOpacity>
         </View>
     );
@@ -36,21 +36,20 @@ export default function InputTask({ addNewTask }) {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        backgroundColor: Colors.GRAY,
-        paddingVertical: 20,
-        flexDirection: 'row',
+        backgroundColor: Colors.DARK,
+        marginTop: 20,    
     },
     input: {
-        width: '90%',
+        height: 50,
         fontSize: 20,
         color: Colors.TEXT,
-        paddingEnd: 10,
-        borderBottomColor: Colors.BACKGROUND,
-        borderBottomWidth: 1,
     },
     button: {
-        width: '10%',
-        alignItems: 'flex-end',
+        backgroundColor: Colors.PRIMARY,
+        borderRadius: 10,
+        height: 50,
+        marginTop: 20,
+        alignItems: 'center',
         justifyContent: 'center',
     },
 

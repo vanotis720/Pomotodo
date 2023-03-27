@@ -12,7 +12,7 @@ export default function Task({ task, deleteTask }) {
             <TouchableOpacity
                 onPress={() => deleteTask(task.id)}
             >
-                <MaterialCommunityIcons name="close-circle-outline" size={30} color={Colors.TEXT} />
+                <MaterialCommunityIcons name="close-circle-outline" size={30} color={Colors.DANGER} />
             </TouchableOpacity>
         </View>
     );
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         alignSelf: 'baseline',
         width: '100%',
         flexDirection: 'row',
-        backgroundColor: Colors.GRAY,
+        backgroundColor: Colors.DARK,
         borderRadius: 10,
         marginTop: 10,
         paddingHorizontal: 10,

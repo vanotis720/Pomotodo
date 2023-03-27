@@ -106,15 +106,16 @@ export default function Timer({ navigation }) {
 
 	return (
 		<View style={styles.container}>
-			<StatusBar style="light" />
+			<StatusBar style="dark" />
 			<View style={styles.header}>
 				<Text style={styles.headerText}>{pomonumber} / {tasks.length}</Text>
 			</View>
 			<View style={styles.timer}>
+				
 				<CountdownCircleTimer
 					isPlaying
 					duration={getTime()}
-					colors={['#8D99AE', '#D90429']}
+					colors={[Colors.SECONDARY, Colors.DANGER]}
 					colorsTime={[POMOTIME, POMOTIME / 5]}
 					size={300}
 					strokeWidth={30}
@@ -136,7 +137,6 @@ export default function Timer({ navigation }) {
 						</Text>
 					}
 				</CountdownCircleTimer>
-				{/* <Button title={"2-Button Alert"} onPress={createTwoButtonAlert} /> */}
 
 			</View>
 			<View style={styles.footer}>
@@ -150,7 +150,7 @@ export default function Timer({ navigation }) {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: Colors.BACKGROUND,
+		backgroundColor: Colors.GRAY,
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
 	},
 	headerText: {
 		flex: 1,
-		color: Colors.TEXT,
+		color: Colors.PRIMARY,
 		fontSize: 32,
 		fontWeight: 'bold',
 	},
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 	},
 	timerText: {
-		color: Colors.TEXT,
+		color: Colors.SECONDARY,
 		fontSize: 45,
 		fontWeight: 'bold',
 	},
@@ -182,8 +182,8 @@ const styles = StyleSheet.create({
 	},
 	taskTitleText: {
 		flex: 1,
-		color: Colors.TEXT,
-		fontSize: 32,
+		color: Colors.PRIMARY,
+		fontSize: 20,
 		fontWeight: 'bold',
 	},
 });
