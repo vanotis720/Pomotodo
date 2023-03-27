@@ -2,14 +2,14 @@
   "expo": {
     "name": "pomotodo",
     "slug": "pomotodo",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "orientation": "portrait",
-    "icon": "./src/assets/images/logo-circle.png",
-    "userInterfaceStyle": "light",
+    "icon": "./assets/images/logo-icon.png",
+    "userInterfaceStyle": "dark",
     "splash": {
-      "image": "./src/assets/images/SpalshScreen.png",
+      "image": "./assets/images/splash.png",
       "resizeMode": "cover",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#3C0759"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -22,14 +22,14 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./src/assets/images/logo-circle.png",
-        "backgroundColor": "#FFFFFF"
+        "foregroundImage": "./assets/images/logo-icon.png",
+        "backgroundColor": "#3C0759"
       },
       "package": "com.vanotis720.pomotodo",
-      "versionCode": 3
+      "versionCode": 4
     },
     "web": {
-      "favicon": "./src/assets/images/logo-circle.png"
+      "favicon": "./assets/images/logo-icon.png"
     }
   }
 }

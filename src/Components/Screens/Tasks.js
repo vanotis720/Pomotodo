@@ -75,7 +75,7 @@ export default function Tasks({ navigation }) {
 						))
 						:
 						<View style={styles.noTasks}>
-							<Image source={require('../../assets/images/no-tasks.png')} style={styles.noTasksImage} />
+							<Image source={require('../../../assets/images/undraw_Waiting__for_you_ldha-green.png')} style={styles.noTasksImage} />
 							<Text style={styles.noTasksText}>Aucune tâche n'a été ajoutée</Text>
 							<Text style={styles.noTasksTextDesc}>Vous pouvez ajouter une tâche en cliquant sur le bouton +</Text>
 						</View>

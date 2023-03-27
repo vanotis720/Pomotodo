@@ -9,7 +9,7 @@ const CustomDrawer = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <Image source={require('../../assets/images/logo-circle.png')} style={styles.logo} />
+                <Image source={require('../../../assets/images/logo-icon.png')} style={styles.logo} />
                 <Text style={styles.headerText} onPress={() => navigation.navigate('Tasks')}>
                     PomoTodo
                 </Text>
