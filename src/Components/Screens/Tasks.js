@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Image, ScrollView, Keyboard } from 'react-native';
@@ -47,7 +46,7 @@ export default function Tasks({ navigation }) {
 
 	return (
 		<View style={styles.container}>
-			<StatusBar style="light" />
+			<StatusBar style="dark" />
 			<View style={styles.header}>
 				<Text style={styles.headerText}>
 					<MaterialCommunityIcons
@@ -107,7 +106,7 @@ const styles = StyleSheet.create({
 	container: {
 		height: '100%',
 		width: '100%',
-		backgroundColor: Colors.BACKGROUND,
+		backgroundColor: Colors.GRAY,
 		justifyContent: 'center',
 		alignItems: 'center',
 	},
@@ -117,22 +116,22 @@ const styles = StyleSheet.create({
 		marginTop: 45,
 		flexDirection: 'row',
 		justifyContent: 'space-between',
-		borderBottomColor: Colors.TEXT,
+		borderBottomColor: Colors.PRIMARY,
 		borderBottomWidth: 1,
 	},
 	headerText: {
 		flex: 1,
-		color: Colors.WHITE,
+		color: Colors.PRIMARY,
 		fontSize: 32,
 		fontWeight: 'bold',
 	},
 	icon: {
 		flex: 1,
-		color: Colors.WHITE,
+		color: Colors.SECONDARY,
 		fontSize: 45,
 		alignItems: 'center',
 		elevation: 5,
-		shadowColor: Colors.GRAY,
+		shadowColor: Colors.PRIMARY,
 	},
 	tasks: {
 		width: '90%',
@@ -146,20 +145,20 @@ const styles = StyleSheet.create({
 		bottom: 5,
 		alignItems: 'center',
 		paddingTop: 10,
-		backgroundColor: Colors.BACKGROUND,
+		backgroundColor: Colors.GRAY,
 	},
 	actionBtn: {
 		height: 50,
 		width: '90%',
 		alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor: Colors.GRAY,
+		backgroundColor: Colors.PRIMARY,
 		borderRadius: 10,
 		elevation: 10,
-		shadowColor: Colors.WHITE,
+		shadowColor: Colors.PRIMARY,
 	},
 	actionBtnText: {
-		color: Colors.TEXT,
+		color: Colors.SECONDARY,
 		fontSize: 15,
 	},
 	noTasks: {
@@ -167,16 +166,16 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 		marginTop: 20,
-		color: Colors.TEXT,
+		color: Colors.PRIMARY,
 	},
 	noTasksText: {
-		color: Colors.TEXT,
+		color: Colors.PRIMARY,
 		fontSize: 32,
 		fontWeight: 'bold',
 		textAlign: 'center',
 	},
 	noTasksTextDesc: {
-		color: Colors.SECONDARY,
+		color: Colors.PRIMARY,
 		fontSize: 15,
 		fontWeight: 'bold',
 		marginTop: 10,
