@@ -3,9 +3,13 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, Linking } from 'react-
 import Colors from '../../utilities/Color';
 import Constants from "expo-constants"
 import * as Device from 'expo-device';
+import { useAuth } from '../providers/AuthProvider';
 
 
 const CustomDrawer = ({ navigation }) => {
+
+    const { signOut } = useAuth();
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -40,6 +44,16 @@ const CustomDrawer = ({ navigation }) => {
                         Visitez CodeLab DRC
                     </Text>
                 </View>
+                <TouchableOpacity
+                 style={styles.bodyItem}
+                 onPress={() => {
+                    signOut()
+                 }}
+                 >
+                    <Text>
+                        Se deconnecter
+                    </Text>
+                </TouchableOpacity>
             </View>
             <View style={styles.footer}>
                 <Text style={styles.footerText}>
