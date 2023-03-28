@@ -4,18 +4,19 @@ import { useAuth } from "../providers/AuthProvider";
 import authStyles from "../../Stylesheet/authStyles";
 
 
-export function LoginView({ navigation }) {
+export function RegisterView({ navigation }) {
 
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const { signIn } = useAuth();
+	const { signUp, signIn } = useAuth();
 
-	const onPressSignIn = async () => {
-		console.log("Trying sign in with user: " + email);
+	const onPressSignUp = async () => {
+		console.log("Trying signup with user: " + email);
 		try {
-			await signIn(email, password);
+			await signUp(email, password);
+			signIn(email, password);
 		} catch (error) {
-			const errorMessage = `Échec de la connexion: ${error.message}`;
+			const errorMessage = `Échec de l'inscription: ${error.message}`;
 			// console.error(errorMessage);
 			Alert.alert(errorMessage);
 		}
@@ -23,8 +24,8 @@ export function LoginView({ navigation }) {
 
 	return (
 		<View style={authStyles.container}>
-			<Text style={authStyles.title}>Rebonjour</Text>
-			<Text style={authStyles.subtitle}>Bienvenue, tu nous as manqué !</Text>
+			<Text style={authStyles.title}>Bienvenu(e)</Text>
+			<Text style={authStyles.subtitle}>Nous sommes heureux de te compter parmi nous !</Text>
 			<KeyboardAvoidingView>
 				<View style={authStyles.inputContainer}>
 					<TextInput
@@ -45,22 +46,19 @@ export function LoginView({ navigation }) {
 					/>
 				</View>
 			</KeyboardAvoidingView>
-			<TouchableOpacity>
-				<Text style={authStyles.forgotPassword}>Mot de passe oublié ?</Text>
-			</TouchableOpacity>
 			<TouchableOpacity
-				style={authStyles.signinBtn}
-				onPress={onPressSignIn}
+				style={authStyles.signUpBtn}
+				onPress={onPressSignUp}
 			>
-				<Text style={authStyles.signinBtnTxt}>S'identifier</Text>
+				<Text style={authStyles.signinBtnTxt}>Je m'inscris</Text>
 			</TouchableOpacity>
 
 			<View style={authStyles.signupAction}>
 				<Text style={authStyles.signupLink}>
-					Tu n'es pas enregistré ?
+				Déjà membre ?
 				</Text>
-				<TouchableOpacity onPress={() => navigation.navigate("Register")}>
-					<Text style={authStyles.signupLinkText}>Inscris-toi</Text>
+				<TouchableOpacity onPress={() => navigation.navigate("Login")}>
+					<Text style={authStyles.signupLinkText}>Identifie-toi</Text>
 				</TouchableOpacity>
 			</View>
 
