@@ -2,15 +2,19 @@ import React, { useState } from "react";
 import { View, Text, TextInput, Alert, TouchableOpacity, KeyboardAvoidingView } from "react-native";
 import { useAuth } from "../providers/AuthProvider";
 import authStyles from "../../Stylesheet/authStyles";
+import { ActivityIndicator } from "react-native";
+import Colors from "../../utilities/Color";
 
 
 export function RegisterView({ navigation }) {
 
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [isLoading, setIsLoading] = useState(false);
 	const { signUp, signIn } = useAuth();
 
 	const onPressSignUp = async () => {
+		setIsLoading(true);
 		console.log("Trying signup with user: " + email);
 		try {
 			await signUp(email, password);
@@ -20,6 +24,7 @@ export function RegisterView({ navigation }) {
 			// console.error(errorMessage);
 			Alert.alert(errorMessage);
 		}
+		setIsLoading(false);
 	};
 
 	return (
@@ -50,7 +55,9 @@ export function RegisterView({ navigation }) {
 				style={authStyles.signUpBtn}
 				onPress={onPressSignUp}
 			>
-				<Text style={authStyles.signinBtnTxt}>Je m'inscris</Text>
+				{
+					isLoading ? <ActivityIndicator color={Colors.WHITE} /> : <Text style={authStyles.signinBtnTxt}>Je m'inscris</Text>
+				}
 			</TouchableOpacity>
 
 			<View style={authStyles.signupAction}>
@@ -58,7 +65,7 @@ export function RegisterView({ navigation }) {
 				Déjà membre ?
 				</Text>
 				<TouchableOpacity onPress={() => navigation.navigate("Login")}>
-					<Text style={authStyles.signupLinkText}>Identifie-toi</Text>
+				<Text style={authStyles.signupLinkText}>Identifie-toi</Text>
 				</TouchableOpacity>
 			</View>
 

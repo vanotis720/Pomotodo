@@ -2,15 +2,19 @@ import React, { useState } from "react";
 import { View, Text, TextInput, Alert, TouchableOpacity, KeyboardAvoidingView } from "react-native";
 import { useAuth } from "../providers/AuthProvider";
 import authStyles from "../../Stylesheet/authStyles";
+import { ActivityIndicator } from "react-native";
+import Colors from "../../utilities/Color";
 
 
 export function LoginView({ navigation }) {
 
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [isLoading, setIsLoading] = useState(false);
 	const { signIn } = useAuth();
 
 	const onPressSignIn = async () => {
+		setIsLoading(true);
 		console.log("Trying sign in with user: " + email);
 		try {
 			await signIn(email, password);
@@ -19,6 +23,7 @@ export function LoginView({ navigation }) {
 			// console.error(errorMessage);
 			Alert.alert(errorMessage);
 		}
+		setIsLoading(false);
 	};
 
 	return (
@@ -52,7 +57,9 @@ export function LoginView({ navigation }) {
 				style={authStyles.signinBtn}
 				onPress={onPressSignIn}
 			>
-				<Text style={authStyles.signinBtnTxt}>S'identifier</Text>
+				{
+					isLoading ? <ActivityIndicator color={Colors.WHITE} /> : <Text style={authStyles.signinBtnTxt}>S'identifier</Text>
+				}
 			</TouchableOpacity>
 
 			<View style={authStyles.signupAction}>
