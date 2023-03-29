@@ -6,7 +6,7 @@ import Colors from "../../utilities/Color";
 export function StartedView({ navigation }) {
 	return (
 		<View style={styles.container}>
-			<StatusBar hidden={true} />
+			<StatusBar style="light" />
 			<View style={styles.imageContainer}>
 				<Image style={styles.image} source={require('../../../assets/images/started.png')} />
 			</View>
