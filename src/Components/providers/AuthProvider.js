@@ -11,35 +11,35 @@ const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(app.currentUser);
     const realmRef = useRef(null);
 
-    // useEffect(() => {
-    //     if (!user) {
-    //         console.warn("NO USER Logged In");
-    //         return;
-    //     }
+    useEffect(() => {
+        if (!user) {
+            console.warn("NO USER Logged In");
+            return;
+        }
 
-    //     const config = {
-    //         sync: {
-    //             user,
-    //             partitionValue: `user=${user.id}`,
-    //         },
-    //     };
+        const config = {
+            sync: {
+                user,
+                partitionValue: `user=${user.id}`,
+            },
+        };
 
-    //     // Open a realm with the logged in user's partition value in order
-    //     // to get the links that the logged in user added
-    //     // (instead of all the links stored for all the users)
-    //     Realm.open(config).then((userRealm) => {
-    //         realmRef.current = userRealm;
-    //     });
+        // Open a realm with the logged in user's partition value in order
+        // to get the todo that the logged in user added
+        // (instead of all the todos stored for all the users)
+        Realm.open(config).then((userRealm) => {
+            realmRef.current = userRealm;
+        });
 
-    //     return () => {
-    //         // cleanup function
-    //         const userRealm = realmRef.current;
-    //         if (userRealm) {
-    //             userRealm.close();
-    //             realmRef.current = null;
-    //         }
-    //     };
-    // }, [user]);
+        return () => {
+            // cleanup function
+            const userRealm = realmRef.current;
+            if (userRealm) {
+                userRealm.close();
+                realmRef.current = null;
+            }
+        };
+    }, [user]);
 
     // The signIn function takes an email and password and uses the
     // emailPassword authentication provider to log in.

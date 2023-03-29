@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { useAuth } from '../providers/AuthProvider';
 import AppDrawer from './AppDrawer';
 import AuthNavigation from './AuthNavigation';
+import { TodosProvider } from '../providers/TodosProvider';
 
 
 const AppRoute = () => {
@@ -12,7 +13,9 @@ const AppRoute = () => {
     return (
         <NavigationContainer>
             {user != null ? (
-                <AppDrawer />
+                <TodosProvider>
+                    <AppDrawer />
+                </TodosProvider>
             ) : <AuthNavigation />}
         </NavigationContainer>
     )
