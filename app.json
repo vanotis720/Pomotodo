@@ -26,10 +26,20 @@
         "backgroundColor": "#3C0759"
       },
       "package": "com.vanotis720.pomotodo",
-      "versionCode": 4
+      "versionCode": 5
     },
     "web": {
       "favicon": "./assets/images/logo-icon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "targetSdkVersion": 33
+          }
+        }
+      ]
+    ]
   }
 }
