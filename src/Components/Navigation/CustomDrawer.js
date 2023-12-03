@@ -35,15 +35,15 @@ const CustomDrawer = ({ navigation }) => {
                         Politique de confidentialité
                     </Text>
                 </View>
-                <View style={styles.bodyItem}>
+                {/* <View style={styles.bodyItem}>
                     <Text style={styles.bodyItemText} onPress={() => { Linking.openURL('https://codelabdrc.com') }}>
                         Visitez CodeLab DRC
                     </Text>
-                </View>
+                </View> */}
             </View>
             <View style={styles.footer}>
                 <Text style={styles.footerText}>
-                    Copyright © 2022 CodeLab. All rights reserved.
+                    Copyright © 2023 Vander Otis. All rights reserved.
                 </Text>
             </View>
         </View>
@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        paddingHorizontal: 20
     },
     footerText: {
         color: Colors.PRIMARY,

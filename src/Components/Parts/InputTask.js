@@ -22,12 +22,13 @@ export default function InputTask({ addNewTask }) {
                 onChangeText={(text) => setTask(text)}
                 value={task}
                 onSubmitEditing={() => { handleAddTask() }}
+                returnKeyType='send'
             />
             <TouchableOpacity
                 style={styles.button}
                 onPress={() => { handleAddTask() }}
             >
-                <MaterialCommunityIcons name="send" size={30} color={Colors.SECONDARY} />
+                <MaterialCommunityIcons name="plus" size={30} color={Colors.WHITE} />
             </TouchableOpacity>
         </View>
     );
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         backgroundColor: Colors.DARK,
-        marginTop: 20,    
+        marginTop: 20,
     },
     input: {
         height: 50,
