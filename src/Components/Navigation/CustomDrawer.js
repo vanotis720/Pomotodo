@@ -3,11 +3,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, Linking } from 'react-
 import Colors from '../../utilities/Color';
 import Constants from "expo-constants"
 
-
 const CustomDrawer = ({ navigation }) => {
-
-    const { signOut } = useAuth();
-
     return (
         <View style={styles.container}>
             <View style={styles.header}>

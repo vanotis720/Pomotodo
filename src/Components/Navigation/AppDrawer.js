@@ -1,5 +1,4 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import About from '../Screens/About';
 import AppStackNavigation from './AppStackNavigation';
 import CustomDrawer from './CustomDrawer';
 
@@ -13,14 +12,6 @@ export default function AppDrawer() {
                 component={AppStackNavigation}
                 options={{
                     headerShown: false,
-                }}
-            />
-            <Drawer.Screen
-                name="About"
-                title="À propos"
-                component={About}
-                options={{
-                    headerShown: true,
                 }}
             />
         </Drawer.Navigator>

@@ -1,16 +1,19 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, Alert, ToastAndroid } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Alert, ToastAndroid, Dimensions } from 'react-native';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
-import { formatSecondsToTime } from '../../helpers/cast';
+import { formatLength, formatSecondsToTime } from '../../helpers/format';
 import Colors from '../../utilities/Color';
 import Context from '../../Context/context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AntDesign, Foundation, Feather } from '@expo/vector-icons';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const POMOTIME = 25 * 60;
 const BREAKTIME = 5 * 60;
 const LONGBREAKTIME = 15 * 60;
+
+const { width, height } = Dimensions.get('window');
 
 export default function Timer({ navigation }) {
 
@@ -169,7 +172,7 @@ export default function Timer({ navigation }) {
 
 
 	return (
-		<View style={styles.container}>
+		<SafeAreaView style={styles.container}>
 			<StatusBar style="dark" />
 			<View style={styles.header}>
 				<Text style={styles.headerText}>{pomoTour} / {tasks.length}</Text>
@@ -195,7 +198,7 @@ export default function Timer({ navigation }) {
 						<Foundation name="next" size={30} color={Colors.WHITE} />
 					</TouchableOpacity>
 					<TouchableOpacity
-						style={styles.stopBtn}
+						style={styles.homeBtn}
 						onPress={confirmBeforeReturnHome}
 					>
 						<Foundation name="home" size={30} color={Colors.GRAY} />
@@ -207,8 +210,8 @@ export default function Timer({ navigation }) {
 					key={timerKey}
 					colors={[Colors.SECONDARY, Colors.DANGER]}
 					colorsTime={[POMOTIME, POMOTIME / 5]}
-					size={300}
-					strokeWidth={30}
+					size={width - 40}
+					strokeWidth={width / 7}
 					onComplete={() => {
 						if (tasks.length === 0) {
 							return navigation.navigate('Tasks');
@@ -225,11 +228,9 @@ export default function Timer({ navigation }) {
 						</Text>
 					}
 				</CountdownCircleTimer>
+				<Text style={styles.taskTitleText}>{formatLength(getPomotypeText(), 40, true)}</Text>
 			</View>
-			<View style={styles.footer}>
-				<Text style={styles.taskTitleText}>{getPomotypeText()}</Text>
-			</View>
-		</View>
+		</SafeAreaView>
 	);
 }
 
@@ -238,45 +239,37 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: Colors.GRAY,
 		alignItems: 'center',
-		justifyContent: 'center',
 	},
 	header: {
-		height: '10%',
-		position: 'absolute',
-		top: 35,
+		flex: 1,
 	},
 	headerText: {
 		flex: 1,
 		color: Colors.PRIMARY,
-		fontSize: 32,
-		fontWeight: 'bold',
+		fontSize: 25,
+		fontWeight: '700',
 	},
 	timer: {
-		height: '70%',
+		flex: 9,
 		alignItems: 'center',
-		justifyContent: 'center',
 	},
 	timerText: {
 		color: Colors.SECONDARY,
-		fontSize: 45,
-		fontWeight: 'bold',
-	},
-	footer: {
-		height: '10%',
-		position: 'absolute',
-		bottom: 10,
+		fontSize: width / 7,
+		fontWeight: '900',
 	},
 	taskTitleText: {
 		flex: 1,
 		color: Colors.PRIMARY,
 		fontSize: 20,
-		fontWeight: 'bold',
+		fontWeight: '700',
+		marginTop: height / 15
 	},
 	actionView: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center',
-		marginBottom: 20,
+		marginBottom: height / 15,
 	},
 	pauseBtn: {
 		backgroundColor: Colors.PRIMARY,
@@ -295,9 +288,8 @@ const styles = StyleSheet.create({
 		marginEnd: 10,
 		justifyContent: 'center',
 		alignItems: 'center'
-
 	},
-	stopBtn: {
+	homeBtn: {
 		backgroundColor: Colors.SECONDARY,
 		width: 60,
 		height: 60,
