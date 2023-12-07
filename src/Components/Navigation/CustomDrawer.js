@@ -2,7 +2,6 @@ import * as React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, Linking } from 'react-native';
 import Colors from '../../utilities/Color';
 import Constants from "expo-constants"
-import * as Device from 'expo-device';
 
 
 const CustomDrawer = ({ navigation }) => {
@@ -14,7 +13,7 @@ const CustomDrawer = ({ navigation }) => {
                     PomoTodo
                 </Text>
                 <Text style={styles.versionText}>
-                    {'v' + Constants.manifest.version} ({Device.osName + " " + Device.osVersion})
+                    {'v' + Constants.manifest.version}
                 </Text>
             </View>
             <View style={styles.body}>
@@ -35,11 +34,6 @@ const CustomDrawer = ({ navigation }) => {
                         Politique de confidentialité
                     </Text>
                 </View>
-                {/* <View style={styles.bodyItem}>
-                    <Text style={styles.bodyItemText} onPress={() => { Linking.openURL('https://codelabdrc.com') }}>
-                        Visitez CodeLab DRC
-                    </Text>
-                </View> */}
             </View>
             <View style={styles.footer}>
                 <Text style={styles.footerText}>
@@ -87,7 +81,8 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        paddingHorizontal: 20
+        paddingHorizontal: 20,
+        marginBottom: 10,
     },
     footerText: {
         color: Colors.PRIMARY,
