@@ -1,6 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, Image, ScrollView, Keyboard, KeyboardAvoidingView } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Image, ScrollView, KeyboardAvoidingView, ToastAndroid } from 'react-native';
 import Colors from '../../utilities/Color';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Task from '../Parts/Task';
@@ -8,7 +7,7 @@ import Context from '../../Context/context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SwipeablePanel } from 'rn-swipeable-panel';
 import InputTask from '../Parts/InputTask';
-
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 export default function Tasks({ navigation }) {
@@ -23,7 +22,7 @@ export default function Tasks({ navigation }) {
 		onPressCloseButton: () => closePanel(),
 	});
 	const [isPanelActive, setIsPanelActive] = useState(false);
-	const { tasks, addNewTask, deleteTask, removeFirstTask } = React.useContext(Context);
+	const { tasks, addNewTask, deleteTask } = React.useContext(Context);
 
 	const openPanel = () => {
 		setIsPanelActive(true);
@@ -33,20 +32,19 @@ export default function Tasks({ navigation }) {
 		setIsPanelActive(false);
 	};
 
-	// update storage task when component unmount
+	const showToast = (msg) => {
+		ToastAndroid.showWithGravity(msg, ToastAndroid.SHORT, ToastAndroid.CENTER);
+	}
+
 	useEffect(() => {
 		AsyncStorage.setItem('tasks', JSON.stringify(tasks));
 		return () => {
-			console.log("storage update");
 			AsyncStorage.setItem('tasks', JSON.stringify(tasks));
 		}
-	}
-		, [tasks]);
-
+	}, [tasks]);
 
 	return (
-		<View style={styles.container}>
-			<StatusBar style="dark" />
+		<SafeAreaView style={styles.container}>
 			<View style={styles.header}>
 				<View style={{ flex: 1, alignItems: 'flex-start' }}>
 					<MaterialCommunityIcons
@@ -55,7 +53,7 @@ export default function Tasks({ navigation }) {
 						onPress={() => navigation.toggleDrawer()}
 					/>
 				</View>
-				<View style={{ flex: 1, alignItems: 'center' }}>
+				<View style={{ flex: 2, alignItems: 'center' }}>
 					<Text style={styles.headerText}>
 						Mes Tâches
 					</Text>
@@ -69,12 +67,13 @@ export default function Tasks({ navigation }) {
 							if (tasks.length > 0) {
 								navigation.navigate('Timer');
 							}
+							else {
+								showToast("Vous n'avez aucune tâche à faire");
+							}
 						}}
 					/>
 				</View>
 			</View>
-
-			{/* <View style={{ height: '85%' }}> */}
 			<ScrollView style={styles.tasks}>
 				{
 					(tasks.length > 0) ?
@@ -89,8 +88,6 @@ export default function Tasks({ navigation }) {
 						</View>
 				}
 			</ScrollView>
-			{/* </View> */}
-
 			<View style={styles.actionWrapper}>
 				<TouchableOpacity
 					style={styles.actionBtn}
@@ -110,7 +107,7 @@ export default function Tasks({ navigation }) {
 				</KeyboardAvoidingView>
 
 			</SwipeablePanel>
-		</View>
+		</SafeAreaView>
 	);
 }
 
@@ -118,17 +115,14 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: Colors.GRAY,
-		// justifyContent: 'center',
 		alignItems: 'center',
 	},
 	header: {
 		flexDirection: 'row',
 		alignItems: 'center',
 		justifyContent: 'space-between',
-		height: 55,
-		paddingBottom: 10,
+		paddingVertical: 10,
 		marginHorizontal: 20,
-		marginTop: 45,
 		borderBottomColor: Colors.PRIMARY,
 		borderBottomWidth: 1,
 	},
