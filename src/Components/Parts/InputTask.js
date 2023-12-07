@@ -13,7 +13,7 @@ export default function InputTask({ addNewTask }) {
     return (
         <View style={styles.container}>
             <TextInput
-                maxLength={50}
+                maxLength={30}
                 style={styles.input}
                 placeholder="Nom de la tâche"
                 placeholderTextColor={Colors.PRIMARY}
