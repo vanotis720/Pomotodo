@@ -14,10 +14,11 @@ export default function Tasks({ navigation }) {
 
 	const [panelProps, setPanelProps] = useState({
 		fullWidth: true,
-		closeOnTouchOutside: true,
 		onlySmall: true,
-		noBackgroundOpacity: true,
+		closeOnTouchOutside: true,
+		noBackgroundOpacity: false,
 		showCloseButton: true,
+		smallPanelHeight: 250,
 		onClose: () => closePanel(),
 		onPressCloseButton: () => closePanel(),
 	});
