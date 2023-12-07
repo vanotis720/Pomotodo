@@ -1,6 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, Image, ScrollView, Keyboard, KeyboardAvoidingView } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Image, ScrollView, KeyboardAvoidingView, ToastAndroid } from 'react-native';
 import Colors from '../../utilities/Color';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Task from '../Parts/Task';
@@ -8,22 +7,23 @@ import Context from '../../Context/context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SwipeablePanel } from 'rn-swipeable-panel';
 import InputTask from '../Parts/InputTask';
-
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 export default function Tasks({ navigation }) {
 
 	const [panelProps, setPanelProps] = useState({
 		fullWidth: true,
-		closeOnTouchOutside: true,
 		onlySmall: true,
-		noBackgroundOpacity: true,
+		closeOnTouchOutside: true,
+		noBackgroundOpacity: false,
 		showCloseButton: true,
+		smallPanelHeight: 250,
 		onClose: () => closePanel(),
 		onPressCloseButton: () => closePanel(),
 	});
 	const [isPanelActive, setIsPanelActive] = useState(false);
-	const { tasks, addNewTask, deleteTask, removeFirstTask } = React.useContext(Context);
+	const { tasks, addNewTask, deleteTask } = React.useContext(Context);
 
 	const openPanel = () => {
 		setIsPanelActive(true);
@@ -33,39 +33,48 @@ export default function Tasks({ navigation }) {
 		setIsPanelActive(false);
 	};
 
-	// update storage task when component unmount
+	const showToast = (msg) => {
+		ToastAndroid.showWithGravity(msg, ToastAndroid.SHORT, ToastAndroid.CENTER);
+	}
+
 	useEffect(() => {
 		AsyncStorage.setItem('tasks', JSON.stringify(tasks));
 		return () => {
-			console.log("storage update");
 			AsyncStorage.setItem('tasks', JSON.stringify(tasks));
 		}
-	}
-		, [tasks]);
-
+	}, [tasks]);
 
 	return (
-		<View style={styles.container}>
-			<StatusBar style="dark" />
+		<SafeAreaView style={styles.container}>
 			<View style={styles.header}>
-				<Text style={styles.headerText}>
+				<View style={{ flex: 1, alignItems: 'flex-start' }}>
 					<MaterialCommunityIcons
 						name="menu"
 						size={30}
 						onPress={() => navigation.toggleDrawer()}
 					/>
-					Mes Tâches
-				</Text>
-				<TouchableOpacity onPress={() => {
-					if (tasks.length > 0) {
-						navigation.navigate('Timer');
-					}
-				}}>
-					<MaterialCommunityIcons name="motion-play" size={30} style={styles.icon} />
-				</TouchableOpacity>
+				</View>
+				<View style={{ flex: 2, alignItems: 'center' }}>
+					<Text style={styles.headerText}>
+						Mes Tâches
+					</Text>
+				</View>
+				<View style={{ flex: 1, alignItems: 'flex-end' }}>
+					<MaterialCommunityIcons
+						name="motion-play"
+						size={45}
+						color={Colors.SECONDARY}
+						onPress={() => {
+							if (tasks.length > 0) {
+								navigation.navigate('Timer');
+							}
+							else {
+								showToast("Vous n'avez aucune tâche à faire");
+							}
+						}}
+					/>
+				</View>
 			</View>
-
-			{/* <View style={{ height: '85%' }}> */}
 			<ScrollView style={styles.tasks}>
 				{
 					(tasks.length > 0) ?
@@ -75,13 +84,11 @@ export default function Tasks({ navigation }) {
 						:
 						<View style={styles.noTasks}>
 							<Image source={require('../../../assets/images/undraw_Waiting__for_you_ldha-green.png')} style={styles.noTasksImage} />
-							<Text style={styles.noTasksText}>Aucune tâche n'a été ajoutée</Text>
-							<Text style={styles.noTasksTextDesc}>Vous pouvez ajouter une tâche en cliquant sur le bouton +</Text>
+							<Text style={styles.noTasksText}>Aucune tâche a venir</Text>
+							<Text style={styles.noTasksTextDesc}>Vous pouvez ajouter une tâche en cliquant sur le bouton juste en dessous</Text>
 						</View>
 				}
 			</ScrollView>
-			{/* </View> */}
-
 			<View style={styles.actionWrapper}>
 				<TouchableOpacity
 					style={styles.actionBtn}
@@ -101,40 +108,29 @@ export default function Tasks({ navigation }) {
 				</KeyboardAvoidingView>
 
 			</SwipeablePanel>
-		</View>
+		</SafeAreaView>
 	);
 }
 
 const styles = StyleSheet.create({
 	container: {
-		height: '100%',
-		width: '100%',
+		flex: 1,
 		backgroundColor: Colors.GRAY,
-		justifyContent: 'center',
 		alignItems: 'center',
 	},
 	header: {
-		height: '8%',
-		width: '90%',
-		marginTop: 45,
 		flexDirection: 'row',
+		alignItems: 'center',
 		justifyContent: 'space-between',
+		paddingVertical: 10,
+		marginHorizontal: 20,
 		borderBottomColor: Colors.PRIMARY,
 		borderBottomWidth: 1,
 	},
 	headerText: {
-		flex: 1,
 		color: Colors.PRIMARY,
-		fontSize: 32,
-		fontWeight: 'bold',
-	},
-	icon: {
-		flex: 1,
-		color: Colors.SECONDARY,
-		fontSize: 45,
-		alignItems: 'center',
-		elevation: 5,
-		shadowColor: Colors.PRIMARY,
+		fontSize: 20,
+		fontWeight: '600',
 	},
 	tasks: {
 		width: '90%',
@@ -161,7 +157,7 @@ const styles = StyleSheet.create({
 		shadowColor: Colors.PRIMARY,
 	},
 	actionBtnText: {
-		color: Colors.SECONDARY,
+		color: Colors.WHITE,
 		fontSize: 15,
 	},
 	noTasks: {

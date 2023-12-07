@@ -8,7 +8,6 @@ export default class GlobalState extends React.Component {
         tasks: [],
     }
 
-    // get tasks from AsyncStorage
     async componentDidMount() {
         const tasks = await AsyncStorage.getItem('tasks');
         if (tasks) {
@@ -30,15 +29,12 @@ export default class GlobalState extends React.Component {
         this.setState({ tasks: this.state.tasks.filter(task => task.id !== taskId) });
     };
 
-    // remove first task on the tasks list
     removeFirstTask = () => {
         console.log('removeFirstTask');
         this.setState({ tasks: this.state.tasks.slice(1) });
     }
 
-    // send first task to the bottom of the tasks list
     sendTaskToBottom = () => {
-        console.log('sendTaskToBottom');
         const firstTask = this.state.tasks[0];
         this.setState({ tasks: [...this.state.tasks.slice(1), firstTask] });
     }
