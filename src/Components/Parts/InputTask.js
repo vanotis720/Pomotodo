@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { View, StyleSheet, TextInput } from 'react-native';
 import Colors from '../../utilities/Color';
+import { GlobalContext } from '../../Context/GlobalContext';
 
-export default function InputTask({ addNewTask }) {
+export default function InputTask() {
     const [task, setTask] = React.useState('');
+    const { addNewTask } = React.useContext(GlobalContext);
 
     const handleAddTask = () => {
         addNewTask(task);

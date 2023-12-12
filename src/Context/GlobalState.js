@@ -30,13 +30,16 @@ export default class GlobalState extends React.Component {
     };
 
     removeFirstTask = () => {
-        console.log('removeFirstTask');
-        this.setState({ tasks: this.state.tasks.slice(1) });
+        if (this.state.tasks > 0) {
+            this.setState({ tasks: this.state.tasks.slice(1) });
+        }
     }
 
     sendTaskToBottom = () => {
-        const firstTask = this.state.tasks[0];
-        this.setState({ tasks: [...this.state.tasks.slice(1), firstTask] });
+        if (this.state.tasks > 1) {
+            const firstTask = this.state.tasks[0];
+            this.setState({ tasks: [...this.state.tasks.slice(1), firstTask] });
+        }
     }
 
     lastTaskId = () => {

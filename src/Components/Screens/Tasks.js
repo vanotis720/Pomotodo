@@ -1,17 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Image, ScrollView, KeyboardAvoidingView, ToastAndroid } from 'react-native';
 import Colors from '../../utilities/Color';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Task from '../Parts/Task';
-import Context from '../../Context/context';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SwipeablePanel } from 'rn-swipeable-panel';
 import InputTask from '../Parts/InputTask';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { GlobalContext } from '../../Context/GlobalContext';
 
 
 export default function Tasks({ navigation }) {
-
 	const [panelProps, setPanelProps] = useState({
 		fullWidth: true,
 		onlySmall: true,
@@ -22,8 +20,9 @@ export default function Tasks({ navigation }) {
 		onClose: () => closePanel(),
 		onPressCloseButton: () => closePanel(),
 	});
+
 	const [isPanelActive, setIsPanelActive] = useState(false);
-	const { tasks, addNewTask, deleteTask } = React.useContext(Context);
+	const { tasks, saveTasks, deleteTask } = useContext(GlobalContext);
 
 	const openPanel = () => {
 		setIsPanelActive(true);
@@ -37,12 +36,15 @@ export default function Tasks({ navigation }) {
 		ToastAndroid.showWithGravity(msg, ToastAndroid.SHORT, ToastAndroid.CENTER);
 	}
 
-	useEffect(() => {
-		AsyncStorage.setItem('tasks', JSON.stringify(tasks));
-		return () => {
-			AsyncStorage.setItem('tasks', JSON.stringify(tasks));
-		}
-	}, [tasks]);
+	// useEffect(() => {
+	// 	saveTasks();
+	// }, [tasks]);
+
+	// useEffect(() => {
+	// 	return () => {
+	// 		saveTasks();
+	// 	}
+	// }, []);
 
 	return (
 		<SafeAreaView style={styles.container}>
@@ -104,7 +106,7 @@ export default function Tasks({ navigation }) {
 				closeRootStyle={{ backgroundColor: Colors.DARK }}
 			>
 				<KeyboardAvoidingView>
-					<InputTask addNewTask={addNewTask} />
+					<InputTask />
 				</KeyboardAvoidingView>
 
 			</SwipeablePanel>

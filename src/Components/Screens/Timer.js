@@ -1,23 +1,22 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Alert, ToastAndroid, Dimensions } from 'react-native';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
 import { formatLength, formatSecondsToTime } from '../../helpers/format';
 import Colors from '../../utilities/Color';
-import Context from '../../Context/context';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AntDesign, Foundation, Feather } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { GlobalContext } from '../../Context/GlobalContext';
 
-const POMOTIME = 25 * 60;
-const BREAKTIME = 5 * 60;
-const LONGBREAKTIME = 15 * 60;
+const POMOTIME = 1 * 60;
+const BREAKTIME = 1 * 60;
+const LONGBREAKTIME = 1 * 60;
 
 const { width, height } = Dimensions.get('window');
 
-export default function Timer({ navigation }) {
+export default Timer = ({ navigation }) => {
 
-	const { tasks, removeFirstTask, sendTaskToBottom } = React.useContext(Context);
+	const { tasks, removeFirstTask, sendTaskToBottom } = useContext(GlobalContext);
 	const [currentTask, setCurrentTask] = React.useState('');
 	const [pomotype, setPomotype] = React.useState('WORK');
 	const [pomoTour, setPomoTour] = React.useState(1);
@@ -32,26 +31,39 @@ export default function Timer({ navigation }) {
 		if (tasks.length > 0) {
 			setCurrentTask(tasks[0]);
 		}
-		return () => {
-			AsyncStorage.setItem('tasks', JSON.stringify(tasks));
-		}
+	}, []);
+
+	useEffect(() => {
+		emptyTask();
+		setCurrentTask(tasks[0]);
+		setTimerKey(new Date());
+
 	}, [tasks]);
 
+	const emptyTask = () => {
+		if (tasks.length <= 0) {
+			return navigation.navigate('Tasks');
+		}
+	};
+
 	const handleTimerEnd = () => {
+		setIsPlaying(false);
 		if (pomotype === 'WORK') {
 			createTwoButtonAlert();
-			setPomoTour(pomoTour + 1);
 
-			if (pomoTour === 3) {
+			if (pomoTour === 4) {
 				setPomoTour(0);
 				setPomotype('LONGBREAK');
 			}
 			else {
 				setPomotype('BREAK');
 			}
+			setPomoTour(pomoTour + 1);
+
 		}
 		else {
 			setPomotype('WORK');
+			setIsPlaying(true);
 		}
 	}
 
@@ -68,6 +80,7 @@ export default function Timer({ navigation }) {
 	}
 
 	const getPomotypeText = () => {
+		console.log(pomotype);
 		if (pomotype === 'WORK') {
 			return currentTask.title;
 		}
@@ -79,26 +92,37 @@ export default function Timer({ navigation }) {
 		}
 	}
 
+	const showProgression = () => {
+		if (pomotype === 'WORK') {
+			return pomoTour + ' / 3';
+		}
+	}
+
 	const handleNextTaskBtn = () => {
-		Alert.alert(
-			"Tâche suivante !",
-			"Passer la tâche actuelle en bas de la liste ?",
-			[
-				{
-					text: "Non",
-					onPress: () => {
-						showToast('Bonne décision, reste concentré')
+		if (tasks.length > 1) {
+			Alert.alert(
+				"Tâche suivante !",
+				"Passer la tâche actuelle en bas de la liste ?",
+				[
+					{
+						text: "Non",
+						onPress: () => {
+							showToast('Bonne décision, reste concentré')
+						},
+						style: "cancel"
 					},
-					style: "cancel"
-				},
-				{
-					text: "Oui",
-					onPress: () => {
-						sendTaskToBottom();
+					{
+						text: "Oui",
+						onPress: () => {
+							sendTaskToBottom();
+						}
 					}
-				}
-			]
-		);
+				]
+			);
+		}
+		else {
+			showToast('Ceci est la dernière tâche')
+		}
 	}
 
 	const createTwoButtonAlert = () => {
@@ -116,9 +140,10 @@ export default function Timer({ navigation }) {
 				{
 					text: "Oui",
 					onPress: () => {
-						console.log("Retirer la tache");
 						// TODO:  mark as finished
 						removeFirstTask();
+						emptyTask();
+						setIsPlaying(true);
 					}
 				}
 			]
@@ -135,6 +160,7 @@ export default function Timer({ navigation }) {
 					onPress: () => {
 						setTimerKey(new Date());
 						sendTaskToBottom();
+						setIsPlaying(true);
 					},
 					style: "cancel"
 				},
@@ -142,6 +168,7 @@ export default function Timer({ navigation }) {
 					text: "Continuer la tâche",
 					onPress: () => {
 						showToast('Super, bonne concentration');
+						setIsPlaying(true);
 					}
 				}
 			]
@@ -175,7 +202,7 @@ export default function Timer({ navigation }) {
 		<SafeAreaView style={styles.container}>
 			<StatusBar style="dark" />
 			<View style={styles.header}>
-				<Text style={styles.headerText}>{pomoTour} / {tasks.length}</Text>
+				<Text style={styles.headerText}>{showProgression()}</Text>
 			</View>
 			<View style={styles.timer}>
 				<View style={styles.actionView}>
@@ -213,13 +240,8 @@ export default function Timer({ navigation }) {
 					size={width - 40}
 					strokeWidth={width / 7}
 					onComplete={() => {
-						if (tasks.length === 0) {
-							return navigation.navigate('Tasks');
-						}
-						else {
-							handleTimerEnd();
-							return { shouldRepeat: true, delay: 1.5 };
-						}
+						handleTimerEnd();
+						return { shouldRepeat: true, delay: 1.5 };
 					}}
 				>
 					{({ remainingTime }) =>

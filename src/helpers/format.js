@@ -1,3 +1,5 @@
+import { log } from "react-native-reanimated";
+
 export const formatDateToLocale = (date) => {
     var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(date).toLocaleDateString('cd-FR', options);
@@ -20,5 +22,5 @@ export function formatSecondsToTime(time) {
 }
 
 export const formatLength = function (text, count, insertDots) {
-    return text.slice(0, count) + (((text.length > count) && insertDots) ? "... " : " ");
+    return (text && text.length > 0) ? text.slice(0, count) + (((text.length > count) && insertDots) ? "... " : " ") : null;
 }
